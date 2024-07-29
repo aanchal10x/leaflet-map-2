@@ -45,7 +45,11 @@
     let polygonCoordinates = [];
     if (polygonParam) {
       try {
-        polygonCoordinates = JSON.parse(decodeURIComponent(polygonParam));
+        // Remove quotes and split the string into coordinates
+        const coords = polygonParam.replace(/^"|"$/g, '').split(',');
+        for (let i = 0; i < coords.length; i += 2) {
+          polygonCoordinates.push([parseFloat(coords[i]), parseFloat(coords[i+1])]);
+        }
       } catch (e) {
         console.error("Error parsing polygon coordinates:", e);
       }
